@@ -40,6 +40,22 @@ int posicionarNavio(int tabuleiro[TAMANHO][TAMANHO], int linha, int coluna, char
         for (int i = 0; i < NAVIO; i++) {
             tabuleiro[linha + i][coluna] = NAVIO;
         }
+    } else if (orientacao == 'D') { // Diagonal principal
+        if (linha + NAVIO > TAMANHO || coluna + NAVIO > TAMANHO) return 0;
+        for (int i = 0; i < NAVIO; i++) {
+            if (tabuleiro[linha + i][coluna + i] != 0) return 0;
+        }
+        for (int i = 0; i < NAVIO; i++) {
+            tabuleiro[linha + i][coluna + i] = NAVIO;
+        }
+    } else if (orientacao == 'A') { // Diagonal secundária
+        if (linha + NAVIO > TAMANHO || coluna - NAVIO < -1) return 0;
+        for (int i = 0; i < NAVIO; i++) {
+            if (tabuleiro[linha + i][coluna - i] != 0) return 0;
+        }
+        for (int i = 0; i < NAVIO; i++) {
+            tabuleiro[linha + i][coluna - i] = NAVIO;
+        }
     } else {
         return 0; // Orientação inválida
     }
@@ -53,6 +69,8 @@ int main() {
     // Definição das coordenadas dos navios (pré-definidas)
     int linha1 = 2, coluna1 = 3; // Navio horizontal
     int linha2 = 5, coluna2 = 6; // Navio vertical
+    int linha3 = 0, coluna3 = 0; // Navio diagonal principal
+    int linha4 = 0, coluna4 = 9; // Navio diagonal secundária
     
     // Posiciona os navios
     if (!posicionarNavio(tabuleiro, linha1, coluna1, 'H')) {
@@ -60,6 +78,12 @@ int main() {
     }
     if (!posicionarNavio(tabuleiro, linha2, coluna2, 'V')) {
         printf("Erro ao posicionar o navio vertical!\n");
+    }
+    if (!posicionarNavio(tabuleiro, linha3, coluna3, 'D')) {
+        printf("Erro ao posicionar o navio diagonal principal!\n");
+    }
+    if (!posicionarNavio(tabuleiro, linha4, coluna4, 'A')) {
+        printf("Erro ao posicionar o navio diagonal secundária!\n");
     }
     
     // Exibe o tabuleiro
